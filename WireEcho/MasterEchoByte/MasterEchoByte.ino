@@ -8,32 +8,30 @@ void setup() {
   Serial.begin(9600);
 }
 
-byte x = 0;
-
 void loop() {
 
-  for(byte i=0; i<255; i++) { // one byte is 2^8 = 256
+  for(byte i=0; i<=255; i++) { // one byte is 2^8 = 256
 
     Serial.print("Send one byte: ");
     Serial.print(i);
     sendByte(i);
-    delay(300);
+    delay(100);
 
     byte echo = requestByte();
-    Serial.print("echo back: ");
+    Serial.print(" echo back: ");
     Serial.println(echo);
-    delay(300);
+    delay(100);
   }
 }
 
 void sendByte(byte n) {
   Wire.beginTransmission(slaveID); // transmit to device #4
-  Wire.write(x);              // sends one byte  
+  Wire.write(n);              // sends one byte  
   Wire.endTransmission();    // stop transmitting
 }
 
 byte requestByte() { 
-  byte c;
+  byte c = -1;
 
   Wire.requestFrom(slaveID, 1); // request 1 byte from the slave
 
